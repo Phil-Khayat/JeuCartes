@@ -1,5 +1,7 @@
 .Carte {
-    position: fixed;
-    left : 400px;
+    position: absolute;
+    left : 0;
+    right: 0;
     top: 100px;
+    margin: auto;
 }
