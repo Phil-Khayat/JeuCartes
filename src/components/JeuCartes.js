@@ -13,7 +13,8 @@ class JeuCartes extends Component {
         super();
         this.state = {
             deck: {},
-            cartes: []
+            cartes: [],
+            remaining: null
         };
     }
 
@@ -23,14 +24,22 @@ class JeuCartes extends Component {
     }
 
     retrieveCarte = async () => {
+
+        if (this.state.remaining === 0) {
+            alert("Il ne reste plus de cartes dans la pioche !");
+            return;
+        }
+
         let API_NEW_CAR_URL = `${API_CARTES}${this.state.deck.deck_id}/draw/`;
         // console.log(API_NEW_CAR_URL);
         let responseCard = await axios.get(API_NEW_CAR_URL);
         // console.log(responseCard);
+        // console.log("remaining cards: ",responseCard.data.remaining);
 
         // this.setState( { cartes: [...this.state.cartes, responseCard.data.cards[0]] });
-        this.setState( (prevState) => ( { cartes: [...prevState.cartes, responseCard.data.cards[0]] }));
-        // console.log(this.state.cartes);
+        this.setState( (prevState) => ( { cartes: [...prevState.cartes, responseCard.data.cards[0]], remaining: responseCard.data.remaining }));
+        // console.log("remaining cards: ",this.state.remaining);
+
     }
 
     render() {
